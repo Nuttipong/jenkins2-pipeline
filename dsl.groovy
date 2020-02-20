@@ -60,7 +60,8 @@ interface AddDefinition {
   void addDefinition(String repo, String branch, boolean lightweight)
 }
 
-class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
+class Job //implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
+  {
   def pj
 
   Job(def pj) {
@@ -149,6 +150,7 @@ println "----> here"
 def pipe = pipelineJob(jobs['portal'][0])
 def job = new Job(pipe)
 println "--Job-->${job}"
+println "--pj-->${job.pj}"
 job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 
 
