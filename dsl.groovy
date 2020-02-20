@@ -219,8 +219,8 @@ tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
       def job
-      if (task[2] == Portal) {
-        job = new Portal(pipeline)
+      if (task[2] == Web) {
+        job = new Web(pipeline)
       } else if (task[2] == Mobile) {
         job = new Mobile(pipeline)
       }
