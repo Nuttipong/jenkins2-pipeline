@@ -10,7 +10,7 @@ def jobs = [
   ia: ['job-dsl-2', 'desc']
 ]
 
-Set ia_versions = ['4.0.1', '4.0.0']
+def ia_versions = ['4.0.1', '4.0.0']
 
 interface AddChoiceParam {
   void addChoiceParam(Object[] args)
