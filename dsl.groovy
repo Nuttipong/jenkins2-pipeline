@@ -25,7 +25,7 @@ class BaseJobBuilder {
     String description
 
     def build() {
-      pipelineJob(name) {
+      pipelineJob(this.name) {
         CommonUtils.addDefaults(this)
       }
     }
