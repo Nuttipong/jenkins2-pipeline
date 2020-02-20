@@ -62,9 +62,7 @@ interface AddDefinition {
 class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
 
   void addChoiceParam(String param1, String[] param2, String param3 = '') {
-    job.with = {
-      choiceParam(param1, [param2], param3)
-    }
+    choiceParam(param1, [param2], param3)
   }
 
   void addConfig(String sortMode) {
@@ -90,32 +88,30 @@ class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
   }
 
   void addDefinition(String repo, String branch, boolean lightweight) {
-    job.with = {
-      definition {
-          cpsScm {
-              scm {
-                  git {
-                      remote {
-                          github(repo, "https", "github.developer.allianz.io")
-                          credentials("git-token-credentials")
-                      }
-                      branch(branch)
-                      extensions{
-                          wipeOutWorkspace()
-                          cloneOptions {
-                              depth(2)
-                              honorRefspec(false)
-                              shallow(true)
-                              noTags(true)
-                              timeout(10)
-                          }
-                      }
-                  }
-                  scriptPath(feJenkinsfile)
-                  lightweight(lightweight)
-              }
-          }
-      }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        github(repo, "https", "github.developer.allianz.io")
+                        credentials("git-token-credentials")
+                    }
+                    branch(branch)
+                    extensions{
+                        wipeOutWorkspace()
+                        cloneOptions {
+                            depth(2)
+                            honorRefspec(false)
+                            shallow(true)
+                            noTags(true)
+                            timeout(10)
+                        }
+                    }
+                }
+                scriptPath(feJenkinsfile)
+                lightweight(lightweight)
+            }
+        }
     }
   }
 }
@@ -126,13 +122,13 @@ pipelineJob(jobs['portal'][0]) {
     numToKeep(numbBuildToKeep)
   }
   job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
-  job.addConfig('DESCENDING')
-  job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
-  job.addChoiceParam('BUILD_OPTIONS', 
-    ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
-  job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
-  job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
-  job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
+  // job.addConfig('DESCENDING')
+  // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
+  // job.addChoiceParam('BUILD_OPTIONS', 
+  //   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
+  // job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
+  // job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
+  // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
 }
 
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
