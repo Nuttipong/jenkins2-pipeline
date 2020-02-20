@@ -82,7 +82,7 @@ class Portal extends PipelineJob implements AddChoiceParam, AddConfig, AddString
     }
   }
 
-  void invoke(def job) {
+  void build(def job) {
       job.addLogRotator(numbBuildToKeep)
       job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
       job.addConfig("DESCENDING", "origin/release.*")
@@ -141,8 +141,8 @@ def tasks = [
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
-      def job = new PipelineJob(pipeline) as Portal
-      job.invoke(pipeline)
+      def job = new PipelineJob(pipeline).asType(Portal)
+      //job.build(pipeline)
 }
 
 
