@@ -45,7 +45,7 @@ interface CreateJob {
 }
 
 interface AddChoiceParam {
-  void addChoiceParam(String param1, String[] param2, String param3 = '')
+  void addChoiceParam(String param1, String[] param2, String param3)
 }
 
 interface AddConfig {
@@ -53,7 +53,7 @@ interface AddConfig {
 }
 
 interface AddStringParam {
-  void addStringParam(String param1 = '', String param2 = '', String param3 = '')
+  void addStringParam(String param1, String param2, String param3)
 }
 
 interface AddDefinition {
