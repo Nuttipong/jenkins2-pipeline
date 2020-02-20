@@ -14,7 +14,7 @@ jobs.each {
     //   name: header + job,
     //   description: 'test'
     // ).build()
-    node {
+    //node {
       pipelineJob(name) {
           wrappers {
               colorizeOutput()
@@ -24,7 +24,7 @@ jobs.each {
               numToKeep(100)
           }
       }
-    }
+    //}
   }
 }
 parallel tasks
