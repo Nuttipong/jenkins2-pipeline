@@ -27,12 +27,12 @@ multiJob('build job 1') {
 multiJob('build job 2') {
     steps {
         phase('Second') {
-            phaseJob('JobZ') { println 'JobZ' + new Date() }
+            phaseJob('2 JobZ') { println '2 JobZ' + new Date() }
         }
         phase('Third') {
-            phaseJob('JobB') { println 'JobB' + new Date() }
-            phaseJob('JobA') { println 'JobA' + new Date() }
-            phaseJob('JobC') { println 'JobC' + new Date() }
+            phaseJob('2 JobB') { println '2 JobB' + new Date() }
+            phaseJob('2 JobA') { println '2 JobA' + new Date() }
+            phaseJob('2 JobC') { println '2 JobC' + new Date() }
         }
     }
 }
