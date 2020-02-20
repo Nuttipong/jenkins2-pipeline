@@ -11,18 +11,6 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
     this.pipelineJob = pipelineJob
   }
 
-  void build() {
-    this.addLogRotator(numbBuildToKeep)
-    this.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
-    // job.addConfig('DESCENDING', 'origin/release.*')
-    // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
-    // job.addChoiceParam('BUILD_OPTIONS', 
-    //   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
-    // job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
-    // job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
-    // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
-  }
-
   void addChoiceParam(Object[] args) {
     this.pipelineJob.with {
       parameters {
@@ -123,7 +111,16 @@ def tasks = [
 //   task -> 
     
 // }
-def job = pipelineJob(tasks['portal'][0])
-new PipelineJob(job).build()
+def pipeline = pipelineJob(tasks['portal'][0])
+def job = new PipelineJob(pipeline)
+job.addLogRotator(numbBuildToKeep)
+job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+// job.addConfig('DESCENDING', 'origin/release.*')
+// job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
+// job.addChoiceParam('BUILD_OPTIONS', 
+//   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
+// job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
+// job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
+// job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
 
 
