@@ -1,6 +1,7 @@
+package jobs
+
 import models.Common
 
-package jobs
 
 class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
