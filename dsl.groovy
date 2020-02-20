@@ -2,7 +2,7 @@
 
 final numbBuildToKeep = 100
 final header = 'hxl_maint_4.0_'
-final defaultBranch = '$DEFAULT_BRANCH'
+final defaultBranch = 'master' //'$DEFAULT_BRANCH'
 def giturl = 'https://github.com/Nuttipong/jenkins2-pipeline.git'
 def jobs = [
   portal: ['provider_portal', ''],
