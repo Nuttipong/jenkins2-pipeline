@@ -1,4 +1,4 @@
-package common
+package utilities
 
 class CommonUtils {
   static void addDefaults(context) {
