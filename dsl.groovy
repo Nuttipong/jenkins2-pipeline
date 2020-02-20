@@ -37,6 +37,10 @@ interface AddLogRotator {
 class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
+  Portal(def pipelineJob) {
+    this.pipelineJob = pipelineJob
+  }
+
   void addChoiceParam(Object[] args) {
     this.pipelineJob.with {
       parameters {
@@ -110,7 +114,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
 
 
 def pipe = pipelineJob(jobs['portal'][0])
-def job = new Portal(pipelineJob: pipe)
+def job = new Portal(pipelineJob)
 job.addLogRotator(numbBuildToKeep)
 job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 job.addConfig('DESCENDING')
