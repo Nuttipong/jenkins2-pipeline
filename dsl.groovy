@@ -27,8 +27,8 @@ Set ia_versions = ['4.0.1', '4.0.0']
 
 
 class JobBuilder {
-    private String name
-    private String description
+    String name
+    String description
 
     def build() {
       job(this.name) {
