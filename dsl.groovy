@@ -22,16 +22,16 @@ tasks.values().each {
       def pipeline = pipelineJob(header + task[0])
       Job job
       switch(task[2]) {
-        case Web: {
+        case Web:
           job = new Web(pipeline)
-        } break;
-        case Mobile: {
+        break;
+        case Mobile:
           job = new Mobile(pipeline)
-        } break;
-        case WebApi: {
+        break;
+        case WebApi:
           job = new WebApi(pipeline)
           job.name = task[0]
-        } break;
+        break;
       } 
       job.build()
 }
