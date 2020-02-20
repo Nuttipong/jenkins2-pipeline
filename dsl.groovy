@@ -73,11 +73,13 @@ class CommonUtils {
   }
 }
 
+
+
 parallel firstBranch: {
-        println new Date() - started
+        println new Date()
     }, secondBranch: {
 
-        println new Date() - started
+        println new Date()
     },
     failFast: true
 }
