@@ -1,15 +1,11 @@
-import javaposse.jobdsl.dsl.DslFactory
-import javaposse.jobdsl.dsl.Job
-import javaposse.jobdsl.dsl.*
 
+
+final header = "hxl_maint_4.0_"
 def giturl = 'https://github.com/Nuttipong/jenkins2-pipeline.git'
 def jobs = [
   'job-dsl-1', 
   'job-dsl-2'
 ]
-def started = new Date()
-final header = "hxl_maint_4.0_"
-
 def tasks = [:]
 
 jobs.each {
@@ -20,14 +16,13 @@ jobs.each {
     ).build(this)
   }
 }
-println tasks
 parallel tasks
 
 class BaseJobBuilder {
     String name
     String description
 
-    Job build(DslFactory factory) {
+    def build(def factory) {
         factory.pipelineJob(this.name) {
             it.description this.description
             CommonUtils.addDefaults(factory)
