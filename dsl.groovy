@@ -46,7 +46,11 @@ tasks["task_2"] = {
 //     }
 //   }
 // }
-parallel tasks
+// parallel tasks
+parallel (
+  { tasks[0] },
+  { tasks[1] },
+)
 
 class BaseJobBuilder {
     String name
