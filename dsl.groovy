@@ -10,10 +10,12 @@ def tasks = [:]
 
 jobs.each {
   job -> tasks[job] = {
-    new BaseJobBuilder(
-      name: header + job,
-      description: 'test'
-    ).build()
+    node {
+      new BaseJobBuilder(
+        name: header + job,
+        description: 'test'
+      ).build()
+    }
   }
 }
 parallel tasks
@@ -23,10 +25,21 @@ class BaseJobBuilder {
     String description
 
     def build() {
-        pipelineJob(this.name) {
-            it.description this.description
-            CommonUtils.addDefaults(factory)
+      pipelineJob(this.name) {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url(giturl)
+                }
+                branch('*/master')
+              }
+            }
+            lightweight()
+          }
         }
+      }
     }
 }
 
