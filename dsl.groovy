@@ -162,7 +162,7 @@ class Web extends BaseJob implements Job {
   }
 }
 
-class Mobile extends BaseJob {
+class Mobile extends BaseJob implements Job {
 
   Mobile(def pipelineJob) {
     super(pipelineJob)
@@ -178,7 +178,7 @@ class Mobile extends BaseJob {
   }
 }
 
-class WebApi extends BaseJob {
+class WebApi extends BaseJob implements Job {
   def name
 
   WebApi(def pipelineJob) {
@@ -205,7 +205,7 @@ class WebApi extends BaseJob {
   }
 }
 
-class MockApi extends BaseJob {
+class MockApi extends BaseJob implements Job {
   MockApi(def pipelineJob) {
     super(pipelineJob)
   }
