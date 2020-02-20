@@ -1,8 +1,9 @@
 final space = "maint"
-final header = 'hxl_maint_4.0_'
+final header = "hxl_maint_4.0_"
 final numbBuildToKeep = 100
-final defaultBranch = 'master' //'$DEFAULT_BRANCH'
-def ia_versions = ['4.0.1', '4.0.0']
+final defaultBranch = "master" //"$DEFAULT_BRANCH"
+final beJenkinsfile = "jenkins-script/Jenkinsfile_release_single_3.5.groovy"
+def ia_versions = ["4.0.1", "4.0.0"]
 
 class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
@@ -22,14 +23,14 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
   void addConfig(String sortMode, String filter) {
     this.pipelineJob.with = {
       configure {
-          it / 'properties' / 'hudson.model.ParametersDefinitionProperty' / 'parameterDefinitions' / 'net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition' {
-          name ('DEFAULT_BRANCH')
+          it / "properties" / "hudson.model.ParametersDefinitionProperty" / "parameterDefinitions" / "net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition" {
+          name ("DEFAULT_BRANCH")
           description ("Default branch to be used. This option will be only for BUILD_LATEST.")
-          type ('PT_BRANCH')
+          type ("PT_BRANCH")
           branchFilter (filter)
           sortMode (sortMode)
-          selectedValue('TOP')
-          listSize('5')
+          selectedValue("TOP")
+          listSize("5")
         }
       }
     }
@@ -43,7 +44,7 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
     }
   }
 
-  void addDefinition(String repo, String branch, boolean lightweight) {
+  void addDefinition(String repo, String branch, boolean lightweight, String jenkinsFile) {
     this.pipelineJob.with {
       definition {
           cpsScm {
@@ -65,7 +66,7 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
                           }
                       }
                   }
-                  scriptPath(feJenkinsfile)
+                  scriptPath(jenkinsFile)
                   lightweight(lightweight)
               }
           }
@@ -95,7 +96,7 @@ interface AddStringParam {
 }
 
 interface AddDefinition {
-  void addDefinition(String repo, String branch, boolean lightweight)
+  void addDefinition(String repo, String branch, boolean lightweight, String jenkinsFile)
 }
 
 interface AddLogRotator {
@@ -103,26 +104,29 @@ interface AddLogRotator {
 }
 
 def tasks = [
-  portal: ['provider_portal', ''],
-  ia: ['job-dsl-2', 'desc']
+  portal: ["${header}provider_portal", "", PipelineJob],
+  // ia: ["${header}integrated_app", ""]
 ]
 
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
-      def job = new PipelineJob(pipeline)
+      def job = new task[2](pipeline)
       job.addLogRotator(numbBuildToKeep)
-      job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+      job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
+      job.addConfig("DESCENDING", "origin/release.*")
+      if task[0] == "hxl_maint_4.0_provider_portal" {
+        job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
+            "BUILD_FROM_UAT_TAG", 
+            "BUILD_FROM_TAG", 
+            "BUILD_FROM_BRANCH", 
+            "DELETE_TAG"
+          ], "")
+        job.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
+        job.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
+        job.addDefinition("hexalite/provider_portal", "refs/remotes/${defaultBranch}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
+      }
 }
 
-def create(def job) {
-  // job.addConfig('DESCENDING', 'origin/release.*')
-  // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
-  // job.addChoiceParam('BUILD_OPTIONS', 
-  //   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
-  // job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
-  // job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
-  // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
-}
 
 
