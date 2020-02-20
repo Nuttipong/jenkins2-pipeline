@@ -82,7 +82,6 @@ parallel firstBranch: {
         println new Date()
     },
     failFast: true
-}
 
 pipelineJob('job-dsl-plugin') {
   definition {
