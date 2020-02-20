@@ -25,7 +25,7 @@ class BaseJobBuilder {
     String description
 
     def build() {
-      pipelineJob(this.name) {
+      return pipelineJob(this.name) {
         definition {
           cpsScm {
             scm {
