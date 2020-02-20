@@ -125,8 +125,21 @@ def addChoiceParam(String param1, String[] param2, String param3 = '') {
 }
 
 
-def portal = new Job(pipelineJob: pipelineJob(jobs['portal'][0]))
-portal.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+// def portal = new Job(pipelineJob: pipelineJob(jobs['portal'][0]))
+// portal.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+
+class A {
+  String name
+
+  void func1() {
+    println "---->func1"    
+  }
+}
+
+def a = new A(name: 'test')
+
+println "---->${a}"
+a.func1()
 
 // def pipeline = pipelineJob(jobs['portal'][0]) {
 //   logRotator {
