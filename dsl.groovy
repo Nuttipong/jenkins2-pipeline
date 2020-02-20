@@ -126,10 +126,11 @@ def tasks = [
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
+      def job
       if (task[0] == Portal) {
-        def job = new task[0](pipeline)
-        job.build()
+        job = new Portal(pipeline)
       }
+      job.build()
 }
 
 
