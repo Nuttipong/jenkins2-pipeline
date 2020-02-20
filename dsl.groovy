@@ -14,14 +14,13 @@ def tasks = [:]
 
 jobs.each {
   job -> tasks[job] = {
-    println job
-    // new BaseJobBuilder(
-    //   name: header + job.name,
-    //   description: 'test'
-    // ).build(this)
+    new BaseJobBuilder(
+      name: header + job,
+      description: 'test'
+    ).build(this)
   }
 }
-
+println tasks
 parallel tasks
 
 class BaseJobBuilder {
