@@ -134,15 +134,17 @@ interface AddLogRotator {
 }
 
 def tasks = [
-  portal: ["${header}provider_portal", ""],
+  portal: ["${header}provider_portal", "", Portal],
   // ia: ["${header}integrated_app", ""]
 ]
 
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
-      def job = new PipelineJob(pipeline).asType(Portal)
-      job.build()
+      if (task[0] == Portal) {
+        def job = new Portal(pipeline)
+        job.build()
+      }
 }
 
 
