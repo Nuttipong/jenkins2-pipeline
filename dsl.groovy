@@ -6,22 +6,9 @@ def jobs = [
   'job-dsl-1', 
   'job-dsl-2'
 ]
-def tasks = [:]
 
-jobs.each {
-  name -> tasks[name] = {
-    node {
-    //   new BaseJobBuilder(
-    //     name: header + job,
-    //     description: 'test'
-    //   ).build()
-      job(name) {
-        description('Job $name')
-      }
-    }
-  }
-}
-parallel tasks
+
+
 
 class BaseJobBuilder {
     String name
@@ -61,15 +48,13 @@ class CommonUtils {
   }
 }
 
+parallel firstBranch: {
+        println new Date()
+    }, secondBranch: {
 
-
-// parallel firstBranch: {
-//         println new Date()
-//     }, secondBranch: {
-
-//         println new Date()
-//     },
-//     failFast: true
+        println new Date()
+    },
+    failFast: true
 
 // pipelineJob('job-dsl-plugin') {
 //   definition {
