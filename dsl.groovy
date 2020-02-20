@@ -113,8 +113,8 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
 }
 
 
-def pipe = pipelineJob(jobs['portal'][0])
-def job = new Portal(pipelineJob)
+def newPipe = pipelineJob(jobs['portal'][0])
+def job = new Portal(newPipe)
 job.addLogRotator(numbBuildToKeep)
 job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 job.addConfig('DESCENDING')
