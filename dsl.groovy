@@ -1,12 +1,12 @@
 import jobs.Job
 
-def jobs = [
+def tasks = [
   portal: ['provider_portal', ''],
   ia: ['job-dsl-2', 'desc']
 ]
 
-jobs.values().each {
-  job -> new Job(job[0], job[1]).build()
+tasks.values().each {
+  task -> new Job(task[0], task[1]).build()
 }
 
 
