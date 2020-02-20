@@ -31,7 +31,7 @@ class JobBuilder {
     String description
 
     def build() {
-      job(this.name) {
+      pipelineJob(this.name) {
         logRotator {
           numToKeep(numbBuildToKeep)
         }
