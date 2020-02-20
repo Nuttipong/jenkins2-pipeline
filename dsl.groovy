@@ -61,10 +61,14 @@ interface AddDefinition {
 }
 
 class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
-  def pipelineJob
+  def pj
+
+  Job(def pj) {
+    this.pj = pj
+  }
 
   void addChoiceParam(String param1, String[] param2, String param3 = '') {
-    pipelineJob.with {
+    this.pj.with {
       choiceParam(param1, [param2], param3)
     }
   }
@@ -140,13 +144,17 @@ def a = new A(name: 'test')
 
 println "---->${a}"
 println "---->${a.func()}"
-
 println "----> here"
 
-// def pipeline = pipelineJob(jobs['portal'][0]) {
-//   logRotator {
-//     numToKeep(numbBuildToKeep)
-//   }
+def pipe = pipelineJob(jobs['portal'][0])
+def job = new Job(pipe)
+println "--Job-->${job}"
+job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+
+
+  // logRotator {
+  //   numToKeep(numbBuildToKeep)
+  // }
   // addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
   //job.addConfig('DESCENDING')
   // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
