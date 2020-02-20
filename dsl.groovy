@@ -12,14 +12,12 @@ def jobs = [
 
 Set ia_versions = ['4.0.1', '4.0.0']
 
-CommonUtils.addDefaults()
-
 interface AddChoiceParam {
   void addChoiceParam(Object[] args)
 }
 
 interface AddConfig {
-  void addConfig(String sortMode)
+  void addConfig(String sortMode, String filter)
 }
 
 interface AddStringParam {
@@ -49,14 +47,14 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
     }
   }
 
-  void addConfig(String sortMode) {
+  void addConfig(String sortMode, String filter) {
     this.pipelineJob.with = {
       configure {
           it / 'properties' / 'hudson.model.ParametersDefinitionProperty' / 'parameterDefinitions' / 'net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition' {
           name ('DEFAULT_BRANCH')
           description ("Default branch to be used. This option will be only for BUILD_LATEST.")
           type ('PT_BRANCH')
-          branchFilter ('origin/release.*')
+          branchFilter (filter)
           sortMode (sortMode)
           selectedValue('TOP')
           listSize('5')
@@ -117,11 +115,11 @@ def newPipe = pipelineJob(jobs['portal'][0])
 def job = new Portal(newPipe)
 job.addLogRotator(numbBuildToKeep)
 job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
-job.addConfig('DESCENDING')
-// job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
-// job.addChoiceParam('BUILD_OPTIONS', 
-//   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
-// job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
-// job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
+//job.addConfig('DESCENDING', 'origin/release.*')
+job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
+job.addChoiceParam('BUILD_OPTIONS', 
+  ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
+job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
+job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
 // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
 
