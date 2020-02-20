@@ -131,7 +131,7 @@ def addChoiceParam(String param1, String[] param2, String param3 = '') {
 class A {
   String name
 
-  void func1() {
+  void func() {
     println "---->func1"    
   }
 }
@@ -139,7 +139,9 @@ class A {
 def a = new A(name: 'test')
 
 println "---->${a}"
-a.func1()
+a.func()
+
+println "----> here"
 
 // def pipeline = pipelineJob(jobs['portal'][0]) {
 //   logRotator {
