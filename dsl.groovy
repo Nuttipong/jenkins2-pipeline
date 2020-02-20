@@ -59,15 +59,7 @@ interface AddDefinition {
   void addDefinition(String repo, String branch, boolean lightweight)
 }
 
-class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
-  def job
-
-  void createJob(String name, String description) {
-      job = new JobBuilder(
-              name: name,
-              description: description
-      ).build()
-  }
+class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
 
   void addChoiceParam(String param1, String[] param2, String param3 = '') {
     job.with = {
@@ -128,9 +120,21 @@ class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDe
   }
 }
 
-def test = new JobBuilder(name: jobs['portal'][0], description: jobs['portal'][1]).build()
-println test
-//def job = new Job()
+def job = new Job()
+pipelineJob(jobs['portal'][0]) {
+  logRotator {
+    numToKeep(numbBuildToKeep)
+  }
+  job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+  job.addConfig('DESCENDING')
+  job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
+  job.addChoiceParam('BUILD_OPTIONS', 
+    ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
+  job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
+  job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
+  job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
+}
+
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
 // job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 // job.addConfig('DESCENDING')
