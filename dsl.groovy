@@ -10,17 +10,19 @@ def jobs = [
 def started = new Date()
 final header = "hxl_maint_4.0_"
 
+def tasks = [:]
+
 jobs.each {
-  job -> jobs[job.name] = {
+  job -> tasks[job.name] = {
     println job.name
-    new BaseJobBuilder(
-      name: header + job.name,
-      description: 'test'
-    ).build(this)
+    // new BaseJobBuilder(
+    //   name: header + job.name,
+    //   description: 'test'
+    // ).build(this)
   }
 }
-println jobs
-parallel jobs
+
+parallel tasks
 
 class BaseJobBuilder {
     String name
