@@ -9,13 +9,13 @@ def jobs = [
 def tasks = [:]
 
 jobs.each {
-  job -> tasks[job] = {
+  name -> tasks[name] = {
     // new BaseJobBuilder(
     //   name: header + job,
     //   description: 'test'
     // ).build()
     node {
-      pipelineJob(job) {
+      job(name) {
         CommonUtils.addDefaults(this)
       }
     }
