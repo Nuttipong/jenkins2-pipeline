@@ -10,10 +10,12 @@ def tasks = [:]
 
 jobs.each {
   name -> tasks[name] = {
-    new BaseJobBuilder(
-      name: header + job,
-      description: 'test'
-    ).build()
+    node {
+      new BaseJobBuilder(
+        name: header + job,
+        description: 'test'
+      ).build()
+    }
   }
 }
 parallel tasks
