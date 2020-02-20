@@ -121,7 +121,7 @@ def tasks = [
 
 tasks.values().each {
   task -> 
-    new PipelineJob(task['portal'][0], '')
+    new PipelineJob(tasks['portal'][0], '')
 }
 
 
