@@ -12,8 +12,8 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
   }
 
   void build() {
-    this.addLogRotator(numbBuildToKeep)
-    this.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+    addLogRotator(numbBuildToKeep)
+    addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
     // job.addConfig('DESCENDING', 'origin/release.*')
     // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
     // job.addChoiceParam('BUILD_OPTIONS', 
