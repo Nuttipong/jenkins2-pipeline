@@ -8,64 +8,53 @@ def jobs = [
 ]
 def tasks = [:]
 
-// jobs.each {
-//   name -> tasks[name] = {
-//     // new BaseJobBuilder(
-//     //   name: header + job,
-//     //   description: 'test'
-//     // ).build()
-//     //node {
-//       pipelineJob(name) {
-//           wrappers {
-//               colorizeOutput()
-//               timestamps()
-//           }
-//           logRotator {
-//               numToKeep(100)
-//           }
-//       }
-//     //}
-//   }
-// }
-// parallel tasks
+jobs.each {
+  name -> tasks[name] = {
+    new BaseJobBuilder(
+      name: header + job,
+      description: 'test'
+    ).build()
+  }
+}
+parallel tasks
 
-// class BaseJobBuilder {
-//     String name
-//     String description
+class BaseJobBuilder {
+    String name
+    String description
 
-//     def build() {
-//       pipelineJob(this.name) {
-//         CommonUtils.addDefaults(this)
-//       }
-//     }
-// }
+    def build() {
+      pipelineJob(this.name) {
+        CommonUtils.addDefaults(this)
+      }
+    }
+}
 
-// class CommonUtils {
-//   static void addDefaults(context) {
-//       context.with {
-//           wrappers {
-//               colorizeOutput()
-//               timestamps()
-//           }
-//           logRotator {
-//               numToKeep(100)
-//           }
-//           definition {
-//             cpsScm {
-//               scm {
-//                 git {
-//                   remote {
-//                     url(giturl)
-//                   }
-//                   branch('*/master')
-//                 }
-//               }
-//               lightweight()
-//             }
-//           }
-//       }
-//   }
-// }
+class CommonUtils {
+  static void addDefaults(context) {
+      context.with {
+          wrappers {
+              colorizeOutput()
+              timestamps()
+          }
+          logRotator {
+              numToKeep(100)
+          }
+          definition {
+            cpsScm {
+              scm {
+                git {
+                  remote {
+                    url(giturl)
+                  }
+                  branch('*/master')
+                }
+              }
+              lightweight()
+            }
+          }
+      }
+  }
+}
 
 // // parallel firstBranch: {
 // //         println new Date() - started
@@ -76,18 +65,18 @@ def tasks = [:]
 // //     failFast: true
 // // }
 
-pipelineJob('job-dsl-plugin') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url(giturl)
-          }
-          branch('*/master')
-        }
-      }
-      lightweight()
-    }
-  }
-}
+// pipelineJob('job-dsl-plugin') {
+//   definition {
+//     cpsScm {
+//       scm {
+//         git {
+//           remote {
+//             url(giturl)
+//           }
+//           branch('*/master')
+//         }
+//       }
+//       lightweight()
+//     }
+//   }
+// }
