@@ -8,9 +8,7 @@ def jobs = [
   name: 'job-dsl-2'
 ]
 def started = new Date()
-
 final header = "hxl_maint_4.0_"
-def jobs = [:];
 
 jobs.each {
   job -> jobs[job.name] = {
@@ -22,7 +20,7 @@ jobs.each {
   }
 }
 println jobs
-//parallel jobs
+parallel jobs
 
 class BaseJobBuilder {
     String name
@@ -31,26 +29,24 @@ class BaseJobBuilder {
     Job build(DslFactory factory) {
         factory.pipelineJob(this.name) {
             it.description this.description
+            CommonUtils.addDefaults(factory)
         }
     }
 }
 
-// class CommonUtils {
-//   static void addDefaults(context) {
-//       context.with {
-//           wrappers {
-//               colorizeOutput()
-//               timestamps()
-//           }
-//           logRotator {
-//               numToKeep(100)
-//           }
-//           publishers {
-//               allowBrokenBuildClaiming()
-//           }
-//       }
-//   }
-// }
+class CommonUtils {
+  static void addDefaults(context) {
+      context.with {
+          wrappers {
+              colorizeOutput()
+              timestamps()
+          }
+          logRotator {
+              numToKeep(100)
+          }
+      }
+  }
+}
 
 // parallel firstBranch: {
 //         println new Date() - started
