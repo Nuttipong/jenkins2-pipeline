@@ -21,7 +21,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   }
 
   void addConfig(String sortMode, String filter) {
-    this.pipelineJob.with = {
+    this.pipelineJob.with {
       configure {
           it / "properties" / "hudson.model.ParametersDefinitionProperty" / "parameterDefinitions" / "net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition" {
           name ("DEFAULT_BRANCH")
@@ -37,7 +37,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   }
 
   void addStringParam(Object[] args) {
-    this.pipelineJob.with = {
+    this.pipelineJob.with {
       parameters {
         stringParam(args[0], args[1], args[2])
       }
