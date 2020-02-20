@@ -1,5 +1,6 @@
-
+final space = "maint"
 final header = "hxl_maint_4.0_"
+final numbBuildToKeep = 100
 final defaultBranch = "master" //"$DEFAULT_BRANCH"
 final beJenkinsfile = "jenkins-script/Jenkinsfile_release_single_3.5.groovy"
 def ia_versions = ["4.0.1", "4.0.0"]
@@ -83,7 +84,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
 
   void build() {
       this.addLogRotator(100)
-      this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
+      this.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
       this.addConfig("DESCENDING", "origin/release.*")
       // job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
       //     "BUILD_FROM_UAT_TAG", 
@@ -125,11 +126,10 @@ def tasks = [
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
-      def job
-      if (task[2] == Portal) {
-        job = new Portal(pipeline)
-      }
-      job.build()
+      //if (task[0] == Portal) {
+        def job = new Portal(pipeline)
+        job.build()
+      //}
 }
 
 
