@@ -1,4 +1,4 @@
-import utilities.common
+import utilities.CommonUtils
 
 final space = "maint"
 final numbBuildToKeep = 100
