@@ -27,7 +27,7 @@ class BaseJobBuilder {
     String description
 
     Job build(DslFactory factory) {
-        factory.pipelineJob(this.name) {
+        factory.pipelineJob(name) {
             it.description this.description
             CommonUtils.addDefaults(factory)
         }
