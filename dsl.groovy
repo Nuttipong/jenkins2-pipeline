@@ -5,10 +5,10 @@ final defaultBranch = "master" //"$DEFAULT_BRANCH"
 final beJenkinsfile = "jenkins-script/Jenkinsfile_release_single_3.5.groovy"
 def ia_versions = ["4.0.1", "4.0.0"]
 
-class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
+class Portal extends PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
-  PipelineJob(def pipelineJob) {
+  Portal(def pipelineJob) {
     this.pipelineJob = pipelineJob
   }
 
@@ -81,6 +81,36 @@ class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefin
       }
     }
   }
+
+  void invoke(def job) {
+      job.addLogRotator(numbBuildToKeep)
+      job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
+      job.addConfig("DESCENDING", "origin/release.*")
+      // job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
+      //     "BUILD_FROM_UAT_TAG", 
+      //     "BUILD_FROM_TAG", 
+      //     "BUILD_FROM_BRANCH", 
+      //     "DELETE_TAG"
+      //   ], "")
+      // job.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
+      // job.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
+      // job.addDefinition("hexalite/provider_portal", "refs/remotes/${defaultBranch}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
+  }
+}
+
+class PipelineJob {
+  def pipelineJob
+
+  PipelineJob(def pipelineJob) {
+    this.pipelineJob = pipelineJob
+  }
+
+  Object asType(Class clazz) {
+    if (clazz == Portal) {
+      new Portal(this.pipelineJob)
+    }
+  }
+
 }
 
 interface AddChoiceParam {
@@ -104,26 +134,15 @@ interface AddLogRotator {
 }
 
 def tasks = [
-  portal: ["${header}provider_portal", "", PipelineJob],
+  portal: ["${header}provider_portal", ""],
   // ia: ["${header}integrated_app", ""]
 ]
 
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
-      def job = new task[2](pipeline)
-      job.addLogRotator(numbBuildToKeep)
-      job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
-      job.addConfig("DESCENDING", "origin/release.*")
-      job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
-          "BUILD_FROM_UAT_TAG", 
-          "BUILD_FROM_TAG", 
-          "BUILD_FROM_BRANCH", 
-          "DELETE_TAG"
-        ], "")
-      job.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
-      job.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
-      job.addDefinition("hexalite/provider_portal", "refs/remotes/${defaultBranch}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
+      def job = new PipelineJob(pipeline) as Portal
+      job.invoke(pipeline)
 }
 
 
