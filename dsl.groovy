@@ -221,7 +221,8 @@ tasks.values().each {
       def job
       if (task[2] == Web) {
         job = new Web(pipeline)
-      } else if (task[2] == Mobile) {
+      }
+      if (task[2] == Mobile) {
         job = new Mobile(pipeline)
       }
       job.build()
