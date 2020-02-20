@@ -123,8 +123,8 @@ def tasks = [
 //   task -> 
     
 // }
-def a = pipelineJob(name)
-def j = new PipelineJob(a)
+def t = pipelineJob(name)
+def j = new PipelineJob(t)
 j.addLogRotator(numbBuildToKeep)
 
 
