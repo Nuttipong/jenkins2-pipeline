@@ -14,9 +14,11 @@ jobs.each {
     //   name: header + job,
     //   description: 'test'
     // ).build()
+    node {
       pipelineJob(job) {
         CommonUtils.addDefaults(this)
       }
+    }
   }
 }
 parallel tasks
