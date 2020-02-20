@@ -131,15 +131,15 @@ def addChoiceParam(String param1, String[] param2, String param3 = '') {
 class A {
   String name
 
-  void func() {
-    println "---->func1"    
+  String func() {
+    name
   }
 }
 
 def a = new A(name: 'test')
 
 println "---->${a}"
-a.func()
+println "---->${a.func()}"
 
 println "----> here"
 
