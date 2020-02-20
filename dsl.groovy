@@ -54,7 +54,7 @@ interface AddLogRotator {
   void addLogRotator(int number)
 }
 
-class BaseJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
+abstract class BaseJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
   BaseJob(def pipelineJob) {
@@ -130,6 +130,8 @@ class BaseJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinitio
       }
     }
   }
+
+  abstract void build()
 }
 
 class Web extends BaseJob {
@@ -138,7 +140,7 @@ class Web extends BaseJob {
     super(pipelineJob)
   }
 
-  void build() {
+  abstract void build() {
     this.addLogRotator(100)
     this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
     //this.addConfig("DESCENDING", "origin/release.*")
@@ -154,84 +156,13 @@ class Web extends BaseJob {
   }
 }
 
-class Mobile implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
-  def pipelineJob
+class Mobile extends BaseJob {
 
   Mobile(def pipelineJob) {
-    this.pipelineJob = pipelineJob
+    super(pipelineJob)
   }
 
-  void addChoiceParam(Object[] args) {
-    this.pipelineJob.with {
-      parameters {
-        choiceParam(args[0], args[1], args[2])
-      }
-    }
-  }
-
-  void addConfig(String sortMode, String filter) {
-    this.pipelineJob.with {
-      configure {
-          it / 'properties' / 'hudson.model.ParametersDefinitionProperty' / 'parameterDefinitions' / 'net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition' {
-          name ('DEFAULT_BRANCH')
-          description ("Default branch to be used. This option will be only for BUILD_LATEST.")
-          type ('PT_BRANCH')
-          branchFilter ('origin/release.*')
-          sortMode ('DESCENDING')
-          selectedValue('TOP')
-          listSize('5')
-        }
-      }
-    }
-  }
-
-  void addStringParam(Object[] args) {
-    this.pipelineJob.with {
-      parameters {
-        stringParam(args[0], args[1], args[2])
-      }
-    }
-  }
-
-  void addDefinition(String repo, String branch, boolean lightweight, String jenkinsFile) {
-    this.pipelineJob.with {
-      definition {
-          cpsScm {
-              scm {
-                  git {
-                      remote {
-                          github(repo, "https", "github.developer.allianz.io")
-                          credentials("git-token-credentials")
-                      }
-                      branch(branch)
-                      extensions{
-                          wipeOutWorkspace()
-                          cloneOptions {
-                              depth(2)
-                              honorRefspec(false)
-                              shallow(true)
-                              noTags(true)
-                              timeout(10)
-                          }
-                      }
-                  }
-                  scriptPath(jenkinsFile)
-                  lightweight(lightweight)
-              }
-          }
-      }
-    }
-  }
-
-  void addLogRotator(int number) {
-    this.pipelineJob.with {
-      logRotator {
-        numToKeep(number)
-      }
-    }
-  }
-
-  void build() {
+  abstract void build() {
       this.addLogRotator(100)
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
       this.addChoiceParam("M_APP_VERSION", ["4.0.1", "4.0.0"], "tell Code-Push apply to which mobile package version")
@@ -241,85 +172,14 @@ class Mobile implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   }
 }
 
-class WebApi implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
-  def pipelineJob
+class WebApi extends BaseJob {
   def name
 
   WebApi(def pipelineJob) {
-    this.pipelineJob = pipelineJob
+    super(pipelineJob)
   }
 
-  void addChoiceParam(Object[] args) {
-    this.pipelineJob.with {
-      parameters {
-        choiceParam(args[0], args[1], args[2])
-      }
-    }
-  }
-
-  void addConfig(String sortMode, String filter) {
-    this.pipelineJob.with {
-      configure {
-          it / 'properties' / 'hudson.model.ParametersDefinitionProperty' / 'parameterDefinitions' / 'net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition' {
-          name ('DEFAULT_BRANCH')
-          description ("Default branch to be used. This option will be only for BUILD_LATEST.")
-          type ('PT_BRANCH')
-          branchFilter ('origin/release.*')
-          sortMode ('DESCENDING')
-          selectedValue('TOP')
-          listSize('5')
-        }
-      }
-    }
-  }
-
-  void addStringParam(Object[] args) {
-    this.pipelineJob.with {
-      parameters {
-        stringParam(args[0], args[1], args[2])
-      }
-    }
-  }
-
-  void addDefinition(String repo, String branch, boolean lightweight, String jenkinsFile) {
-    this.pipelineJob.with {
-      definition {
-          cpsScm {
-              scm {
-                  git {
-                      remote {
-                          github(repo, "https", "github.developer.allianz.io")
-                          credentials("git-token-credentials")
-                      }
-                      branch(branch)
-                      extensions{
-                          wipeOutWorkspace()
-                          cloneOptions {
-                              depth(2)
-                              honorRefspec(false)
-                              shallow(true)
-                              noTags(true)
-                              timeout(10)
-                          }
-                      }
-                  }
-                  scriptPath(jenkinsFile)
-                  lightweight(lightweight)
-              }
-          }
-      }
-    }
-  }
-
-  void addLogRotator(int number) {
-    this.pipelineJob.with {
-      logRotator {
-        numToKeep(number)
-      }
-    }
-  }
-
-  void build() {
+  abstract  build() {
       this.addLogRotator(100)
       this.addChoiceParam("COMPONENT", [this.name], "Component to Build")
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
@@ -339,6 +199,12 @@ class WebApi implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   }
 }
 
-class MockApi {
-  
+class MockApi extends BaseJob {
+  MockApi(def pipelineJob) {
+    super(pipelineJob)
+  }
+
+  abstract void build() {
+
+  }
 }
