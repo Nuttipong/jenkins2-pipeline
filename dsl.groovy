@@ -212,7 +212,7 @@ interface AddLogRotator {
 
 def tasks = [
   portal: ["${header}provider_portal", "", Web],
-  ia: ["${header}integrated_app", "", Mobile],
+  //ia: ["${header}integrated_app", "", Mobile],
 ]
 
 tasks.values().each {
@@ -222,9 +222,9 @@ tasks.values().each {
       if (task[2] == Web) {
         job = new Web(pipeline)
       }
-      if (task[2] == Mobile) {
-        job = new Mobile(pipeline)
-      }
+      // if (task[2] == Mobile) {
+      //   job = new Mobile(pipeline)
+      // }
       job.build()
 }
 
