@@ -21,8 +21,8 @@ jobs.each {
     ).build(this)
   }
 }
-
-parallel jobs
+println jobs
+//parallel jobs
 
 class BaseJobBuilder {
     String name
