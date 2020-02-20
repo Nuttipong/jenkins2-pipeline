@@ -128,7 +128,7 @@ class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDe
   }
 }
 
-def test = JobBuilder(name: jobs['portal'][0], description: jobs['portal'][1])
+def test = new JobBuilder(name: jobs['portal'][0], description: jobs['portal'][1]).build()
 println test
 //def job = new Job()
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
