@@ -13,8 +13,8 @@ final header = "hxl_maint_4.0_"
 def tasks = [:]
 
 jobs.each {
-  job -> tasks[job[0]] = {
-    println job[0]
+  job -> tasks[job] = {
+    println job
     // new BaseJobBuilder(
     //   name: header + job.name,
     //   description: 'test'
