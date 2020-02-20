@@ -23,7 +23,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   void addConfig(String sortMode, String filter) {
     this.pipelineJob.with {
       configure {
-          it / "properties" / "hudson.model.ParametersDefinitionProperty" / "parameterDefinitions" / "net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition" {
+          it / 'properties' / "hudson.model.ParametersDefinitionProperty" / 'parameterDefinitions' / "net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition" {
           name ("DEFAULT_BRANCH")
           description ("Default branch to be used. This option will be only for BUILD_LATEST.")
           type ("PT_BRANCH")
