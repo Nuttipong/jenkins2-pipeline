@@ -117,12 +117,17 @@ class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
   }
 }
 
+def addChoiceParam(String param1, String[] param2, String param3 = '') {
+  { choiceParam(param1, [param2], param3) }
+}
+
+
 def job = new Job()
 pipelineJob(jobs['portal'][0]) {
   logRotator {
     numToKeep(numbBuildToKeep)
   }
-  job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+  addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
   // job.addConfig('DESCENDING')
   // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
   // job.addChoiceParam('BUILD_OPTIONS', 
