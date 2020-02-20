@@ -68,7 +68,7 @@ class Job //implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition 
     this.pj = pj
   }
 
-  void addChoiceParam(String param1, String[] param2, String param3 = '') {
+  void addChoiceParam(String param1, ArrayList param2, String param3 = '') {
     this.pj.with {
       choiceParam(param1, [param2], param3)
     }
