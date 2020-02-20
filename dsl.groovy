@@ -15,7 +15,7 @@ def jobs = [:];
 jobs.each {
   job -> jobs[job.name] = {
     new BaseJobBuilder(
-      name: header + job.name
+      name: header + job.name,
       description: 'test'
     ).build(this)
   }
