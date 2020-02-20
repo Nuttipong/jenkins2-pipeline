@@ -45,7 +45,7 @@ interface CreateJob {
 }
 
 interface AddChoiceParam {
-  def addChoiceParam(String param1, String[] param2, String param3)
+  void addChoiceParam(String param1, String[] param2, String param3)
 }
 
 interface AddConfig {
@@ -61,9 +61,12 @@ interface AddDefinition {
 }
 
 class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
+  def pipelineJob
 
-  def addChoiceParam(String param1, String[] param2, String param3 = '') {
-    return choiceParam(param1, [param2], param3)
+  void addChoiceParam(String param1, String[] param2, String param3 = '') {
+    pipelineJob.with {
+      choiceParam(param1, [param2], param3)
+    }
   }
 
   void addConfig(String sortMode) {
@@ -122,22 +125,22 @@ def addChoiceParam(String param1, String[] param2, String param3 = '') {
 }
 
 
-//def job = new Job()
-def job = pipelineJob(jobs['portal'][0]) {
-  logRotator {
-    numToKeep(numbBuildToKeep)
-  }
+def portal = new Job(pipelineJob: pipelineJob(jobs['portal'][0]))
+portal.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+
+// def pipeline = pipelineJob(jobs['portal'][0]) {
+//   logRotator {
+//     numToKeep(numbBuildToKeep)
+//   }
   // addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
-  // job.addConfig('DESCENDING')
+  //job.addConfig('DESCENDING')
   // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
   // job.addChoiceParam('BUILD_OPTIONS', 
   //   ['BUILD_FROM_SIT_TAG','BUILD_FROM_UAT_TAG', 'BUILD_FROM_TAG', 'BUILD_FROM_BRANCH', 'DELETE_TAG'], '')
   // job.addStringParam('BUILD_SPECIFIER', '', 'version number of SIT or UAT or MAINT tag, or branch name')
   // job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
   // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
-}
-
-println ">>>>>${job}"
+//}
 
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
 // job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
