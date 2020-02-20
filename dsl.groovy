@@ -115,17 +115,15 @@ tasks.values().each {
       job.addLogRotator(numbBuildToKeep)
       job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
       job.addConfig("DESCENDING", "origin/release.*")
-      if task[0] == "hxl_maint_4.0_provider_portal" {
-        job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
-            "BUILD_FROM_UAT_TAG", 
-            "BUILD_FROM_TAG", 
-            "BUILD_FROM_BRANCH", 
-            "DELETE_TAG"
-          ], "")
-        job.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
-        job.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
-        job.addDefinition("hexalite/provider_portal", "refs/remotes/${defaultBranch}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
-      }
+      job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
+          "BUILD_FROM_UAT_TAG", 
+          "BUILD_FROM_TAG", 
+          "BUILD_FROM_BRANCH", 
+          "DELETE_TAG"
+        ], "")
+      job.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
+      job.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
+      job.addDefinition("hexalite/provider_portal", "refs/remotes/${defaultBranch}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
 }
 
 
