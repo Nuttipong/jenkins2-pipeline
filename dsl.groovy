@@ -7,13 +7,13 @@ def ia_versions = ['4.0.1', '4.0.0']
 class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
-  PipelineJob(String name) {
-    this.pipelineJob = pipelineJob(name)
+  PipelineJob(def pipelineJob) {
+    this.pipelineJob = pipelineJob
   }
 
   void build() {
-    addLogRotator(numbBuildToKeep)
-    addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+    this.addLogRotator(numbBuildToKeep)
+    this.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
     // job.addConfig('DESCENDING', 'origin/release.*')
     // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
     // job.addChoiceParam('BUILD_OPTIONS', 
@@ -123,8 +123,7 @@ def tasks = [
 //   task -> 
     
 // }
-//def t = pipelineJob(tasks['portal'][0])
-def j = new PipelineJob(tasks['portal'][0])
-j.addLogRotator(numbBuildToKeep)
+def job = pipelineJob(tasks['portal'][0])
+new PipelineJob(job).build()
 
 
