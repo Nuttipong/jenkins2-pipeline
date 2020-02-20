@@ -4,8 +4,8 @@ import javaposse.jobdsl.dsl.*
 
 def giturl = 'https://github.com/Nuttipong/jenkins2-pipeline.git'
 def jobs = [
-  name: 'job-dsl-1', 
-  name: 'job-dsl-2'
+  'job-dsl-1', 
+  'job-dsl-2'
 ]
 def started = new Date()
 final header = "hxl_maint_4.0_"
@@ -13,8 +13,8 @@ final header = "hxl_maint_4.0_"
 def tasks = [:]
 
 jobs.each {
-  job -> tasks[job.name] = {
-    println job.name
+  job -> tasks[job[0]] = {
+    println job[0]
     // new BaseJobBuilder(
     //   name: header + job.name,
     //   description: 'test'
