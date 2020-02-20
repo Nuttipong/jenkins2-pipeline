@@ -3,35 +3,41 @@ final header = "hxl_maint_4.0_"
 
 def tasks = [
   portal: ["provider_portal", "", Web],
-  // ia: ["integrated_app", "", Mobile],
-  // apiGatewayMock: ["gbmf-apigateway-mock", "", WebApi],
-  // gbmfConfigServer: ["gbmf-config-server", "", WebApi],
-  // gbmfServiceDiscovery: ["gbmf-service-discovery", "", WebApi],
-  // gbmfFleetManagement: ["gbmf-fleet-management", "", WebApi],
-  // gbmfGeoTracking: ["gbmf-geo-tracking", "", WebApi],
-  // gbmfGuac: ["gbmf-guac", "", WebApi],
-  // gbmfNotification: ["gbmf-notification", "", WebApi],
-  // gbmfServiceBroker: ["gbmf-service-broker", "", WebApi],
-  // gbmfTranslation: ["gbmf-translation", "", WebApi],
-  // gbmfUserManagement: ["gbmf-user-management", "", WebApi],
-  // gbmfJobMonitoring: ["gbmf-job-monitoring", "", WebApi],
+  ia: ["integrated_app", "", Mobile],
+  apiGatewayMock: ["gbmf-apigateway-mock", "", WebApi],
+  gbmfConfigServer: ["gbmf-config-server", "", WebApi],
+  gbmfServiceDiscovery: ["gbmf-service-discovery", "", WebApi],
+  gbmfFleetManagement: ["gbmf-fleet-management", "", WebApi],
+  gbmfGeoTracking: ["gbmf-geo-tracking", "", WebApi],
+  gbmfGuac: ["gbmf-guac", "", WebApi],
+  gbmfNotification: ["gbmf-notification", "", WebApi],
+  gbmfServiceBroker: ["gbmf-service-broker", "", WebApi],
+  gbmfTranslation: ["gbmf-translation", "", WebApi],
+  gbmfUserManagement: ["gbmf-user-management", "", WebApi],
+  gbmfJobMonitoring: ["gbmf-job-monitoring", "", WebApi],
 ]
 
 tasks.values().each {
   task -> 
       def pipeline = pipelineJob(header + task[0])
-      def job
-      if (task[2] == Web) {
-        job = new Web(pipeline)
-      }
-      if (task[2] == Mobile) {
-        job = new Mobile(pipeline)
-      }
-      if (task[2] == WebApi) {
-        job = new WebApi(pipeline)
-        job.name = task[0]
-      }
+      Job job
+      switch(task[2]) {
+        case Web: {
+          job = new Web(pipeline)
+        } break;
+        case Mobile: {
+          job = new Mobile(pipeline)
+        } break;
+        case WebApi: {
+          job = new WebApi(pipeline)
+          job.name = task[0]
+        } break;
+      } 
       job.build()
+}
+
+interface Job {
+  void build()
 }
 
 interface AddChoiceParam {
@@ -134,7 +140,7 @@ abstract class BaseJob implements AddChoiceParam, AddConfig, AddStringParam, Add
   abstract void build()
 }
 
-class Web extends BaseJob {
+class Web extends BaseJob implements Job {
 
   Web(def pipelineJob) {
     super(pipelineJob)
