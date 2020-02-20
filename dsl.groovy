@@ -8,39 +8,39 @@ def jobs = [
 ]
 def tasks = [:]
 
-// jobs.each {
-//   name -> tasks[name] = {
-//     // node {
-//     //   new BaseJobBuilder(
-//     //     name: header + job,
-//     //     description: 'test'
-//     //   ).build()
-//     // }
-//     pipelineJob(name) {
-//       definition {
-//         cpsScm {
-//           scm {
-//             git {
-//               remote {
-//                 url(giturl)
-//               }
-//               branch('*/master')
-//             }
-//           }
-//           lightweight()
-//         }
-//       }
-//     }
-//   }
-// }
-// parallel tasks
+jobs.each {
+  name -> tasks[name] = {
+    node {
+    //   new BaseJobBuilder(
+    //     name: header + job,
+    //     description: 'test'
+    //   ).build()
+      job(name) {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url(giturl)
+                }
+                branch('*/master')
+              }
+            }
+            lightweight()
+          }
+        }
+      }
+    }
+  }
+}
+parallel tasks
 
 class BaseJobBuilder {
     String name
     String description
 
     def build() {
-      pipelineJob(this.name) {
+      job(this.name) {
         CommonUtils.addDefaults(this)
       }
     }
@@ -75,26 +75,26 @@ class CommonUtils {
 
 
 
-parallel firstBranch: {
-        println new Date()
-    }, secondBranch: {
+// parallel firstBranch: {
+//         println new Date()
+//     }, secondBranch: {
 
-        println new Date()
-    },
-    failFast: true
+//         println new Date()
+//     },
+//     failFast: true
 
-pipelineJob('job-dsl-plugin') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url(giturl)
-          }
-          branch('*/master')
-        }
-      }
-      lightweight()
-    }
-  }
-}
+// pipelineJob('job-dsl-plugin') {
+//   definition {
+//     cpsScm {
+//       scm {
+//         git {
+//           remote {
+//             url(giturl)
+//           }
+//           branch('*/master')
+//         }
+//       }
+//       lightweight()
+//     }
+//   }
+// }
