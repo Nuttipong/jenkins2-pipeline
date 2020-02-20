@@ -16,19 +16,7 @@ jobs.each {
     //     description: 'test'
     //   ).build()
       job(name) {
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url(giturl)
-                }
-                branch('*/master')
-              }
-            }
-            lightweight()
-          }
-        }
+        description('Job $name')
       }
     }
   }
