@@ -123,7 +123,7 @@ def tasks = [
 //   task -> 
     
 // }
-def t = pipelineJob(name)
+def t = pipelineJob(tasks['portal'][0])
 def j = new PipelineJob(t)
 j.addLogRotator(numbBuildToKeep)
 
