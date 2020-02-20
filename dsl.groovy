@@ -82,10 +82,10 @@ class Portal extends PipelineJob implements AddChoiceParam, AddConfig, AddString
     }
   }
 
-  void build(def job) {
-      job.addLogRotator(numbBuildToKeep)
-      job.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
-      job.addConfig("DESCENDING", "origin/release.*")
+  void build() {
+      this.addLogRotator(100)
+      this.addChoiceParam("ENVIRONMENT", [space, space + "@AWS"], "")
+      this.addConfig("DESCENDING", "origin/release.*")
       // job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
       //     "BUILD_FROM_UAT_TAG", 
       //     "BUILD_FROM_TAG", 
@@ -142,7 +142,7 @@ tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
       def job = new PipelineJob(pipeline).asType(Portal)
-      //job.build(pipeline)
+      job.build()
 }
 
 
