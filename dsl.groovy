@@ -40,7 +40,7 @@ class JobBuilder {
 }
 
 interface CreateJob {
-  void createJob(String name)
+  void createJob(String name, String description)
 }
 
 interface AddChoiceParam {
@@ -56,17 +56,17 @@ interface AddStringParam {
 }
 
 interface AddDefinition {
-  void addDefinition(String repo, String branch)
+  void addDefinition(String repo, String branch, boolean lightweight)
 }
 
 class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
-  private def job  
+  private def job
 
   void createJob(String name, String description) {
-    job = new JobBuilder(
-      name: name,
-      description: description
-    ).build()
+      job = new JobBuilder(
+              name: name,
+              description: description
+      ).build()
   }
 
   void addChoiceParam(String param1, String[] param2, String param3 = '') {
@@ -126,7 +126,6 @@ class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDe
       }
     }
   }
-
 }
 
 def job = new Job()
