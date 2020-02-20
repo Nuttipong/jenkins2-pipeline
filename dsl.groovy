@@ -6,7 +6,9 @@ def tasks = [
 ]
 
 tasks.values().each {
-  task -> new Job(task[0], task[1]).build()
+  task -> 
+    println task
+    new Job(task[0], task[1]).build()
 }
 
 
