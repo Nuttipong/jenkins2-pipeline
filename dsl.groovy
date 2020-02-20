@@ -122,12 +122,12 @@ def addChoiceParam(String param1, String[] param2, String param3 = '') {
 }
 
 
-def job = new Job()
-pipelineJob(jobs['portal'][0]) {
+//def job = new Job()
+def job = pipelineJob(jobs['portal'][0]) {
   logRotator {
     numToKeep(numbBuildToKeep)
   }
-  addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
+  // addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
   // job.addConfig('DESCENDING')
   // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
   // job.addChoiceParam('BUILD_OPTIONS', 
@@ -136,6 +136,8 @@ pipelineJob(jobs['portal'][0]) {
   // job.addStringParam('COMMIT_ID', '', 'BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)')
   // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
 }
+
+println job
 
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
 // job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
