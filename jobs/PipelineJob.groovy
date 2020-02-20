@@ -6,10 +6,10 @@ final numbBuildToKeep = 100
 final defaultBranch = 'master' //'$DEFAULT_BRANCH'
 def ia_versions = ['4.0.1', '4.0.0']
 
-class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
+class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
-  Job(String name, String desc) {
+  PipelineJob(String name, String desc) {
     this.pipelineJob = pipelineJob(name)
   }
 

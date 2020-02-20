@@ -1,4 +1,4 @@
-import jobs.Job
+import jobs.PipelineJob
 
 def tasks = [
   portal: ['provider_portal', ''],
@@ -8,7 +8,7 @@ def tasks = [
 tasks.values().each {
   task -> 
     println task
-    new Job(task[0], task[1]).build()
+    new PipelineJob(task[0], task[1]).build()
 }
 
 
