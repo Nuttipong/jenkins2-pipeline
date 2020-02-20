@@ -27,6 +27,10 @@ Set ia_versions = ['4.0.1', '4.0.0']
 
 
 abstract class BaseJobBuilder {
+  abstract def build()
+}
+
+class JobBuilder extends BaseJobBuilder {
     private String name
     private String description
     private def job
@@ -60,12 +64,12 @@ interface AddDefinition {
   void addDefinition(String repo, String branch)
 }
 
-class Job extends BaseJobBuilder implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
+class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
 
   private def job = null
 
   void createJob(String name, String description) {
-    job = new BaseJobBuilder(
+    job = new JobBuilder(
       name: name,
       description: description
     ).build()
@@ -132,9 +136,7 @@ class Job extends BaseJobBuilder implements CreateJob, AddChoiceParam, AddConfig
 }
 
 def job = new Job()
-
 println job
-
 job.createJob(jobs['portal'][0], jobs['portal'][1])
 job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 job.addConfig('DESCENDING')
