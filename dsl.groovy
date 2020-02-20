@@ -4,17 +4,17 @@ final header = "hxl_maint_4.0_"
 def tasks = [
   portal: ["provider_portal", "", Web],
   ia: ["integrated_app", "", Mobile],
-  apiGatewayMock: ["gbmf-apigateway-mock", "", WebApi],
-  gbmfConfigServer: ["gbmf-config-server", "", WebApi],
-  gbmfServiceDiscovery: ["gbmf-service-discovery", "", WebApi],
-  gbmfFleetManagement: ["gbmf-fleet-management", "", WebApi],
-  gbmfGeoTracking: ["gbmf-geo-tracking", "", WebApi],
-  gbmfGuac: ["gbmf-guac", "", WebApi],
-  gbmfNotification: ["gbmf-notification", "", WebApi],
-  gbmfServiceBroker: ["gbmf-service-broker", "", WebApi],
-  gbmfTranslation: ["gbmf-translation", "", WebApi],
-  gbmfUserManagement: ["gbmf-user-management", "", WebApi],
-  gbmfJobMonitoring: ["gbmf-job-monitoring", "", WebApi],
+  // apiGatewayMock: ["gbmf-apigateway-mock", "", WebApi],
+  // gbmfConfigServer: ["gbmf-config-server", "", WebApi],
+  // gbmfServiceDiscovery: ["gbmf-service-discovery", "", WebApi],
+  // gbmfFleetManagement: ["gbmf-fleet-management", "", WebApi],
+  // gbmfGeoTracking: ["gbmf-geo-tracking", "", WebApi],
+  // gbmfGuac: ["gbmf-guac", "", WebApi],
+  // gbmfNotification: ["gbmf-notification", "", WebApi],
+  // gbmfServiceBroker: ["gbmf-service-broker", "", WebApi],
+  // gbmfTranslation: ["gbmf-translation", "", WebApi],
+  // gbmfUserManagement: ["gbmf-user-management", "", WebApi],
+  // gbmfJobMonitoring: ["gbmf-job-monitoring", "", WebApi],
 ]
 
 tasks.values().each {
