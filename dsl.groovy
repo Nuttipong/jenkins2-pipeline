@@ -25,7 +25,7 @@ class BaseJobBuilder {
     String description
 
     def build() {
-      return pipelineJob(this.name) {
+      def job = pipelineJob(name) {
         definition {
           cpsScm {
             scm {
@@ -40,6 +40,9 @@ class BaseJobBuilder {
           }
         }
       }
+
+      println '>>>>>>>' job
+
     }
 }
 
