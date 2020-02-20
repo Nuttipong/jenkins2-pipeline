@@ -10,7 +10,7 @@ def jobs = [
   ia: ['job-dsl-2', 'desc']
 ]
 
-jobs.each {
+jobs.keySet().each {
   job -> {
     new Portal(pipelineJob(job[0])).build()
   }
