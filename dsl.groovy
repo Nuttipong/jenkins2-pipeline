@@ -1,5 +1,6 @@
 // import utilities.CommonUtils
 
+final space = "maint"
 final numbBuildToKeep = 100
 final header = 'hxl_maint_4.0_'
 final defaultBranch = 'master' //'$DEFAULT_BRANCH'
