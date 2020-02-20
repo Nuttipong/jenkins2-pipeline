@@ -10,10 +10,13 @@ def tasks = [:]
 
 jobs.each {
   job -> tasks[job] = {
-    new BaseJobBuilder(
-      name: header + job,
-      description: 'test'
-    ).build()
+    // new BaseJobBuilder(
+    //   name: header + job,
+    //   description: 'test'
+    // ).build()
+      pipelineJob(job) {
+        CommonUtils.addDefaults(this)
+      }
   }
 }
 parallel tasks
