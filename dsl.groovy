@@ -140,7 +140,7 @@ class Web extends BaseJob {
     super(pipelineJob)
   }
 
-  abstract void build() {
+  void build() {
     this.addLogRotator(100)
     this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
     //this.addConfig("DESCENDING", "origin/release.*")
@@ -162,7 +162,7 @@ class Mobile extends BaseJob {
     super(pipelineJob)
   }
 
-  abstract void build() {
+  void build() {
       this.addLogRotator(100)
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
       this.addChoiceParam("M_APP_VERSION", ["4.0.1", "4.0.0"], "tell Code-Push apply to which mobile package version")
@@ -204,7 +204,7 @@ class MockApi extends BaseJob {
     super(pipelineJob)
   }
 
-  abstract void build() {
+  void build() {
 
   }
 }
