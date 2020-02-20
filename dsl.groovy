@@ -7,20 +7,7 @@ def jobs = [
   'job-dsl-2'
 ]
 def tasks = [:]
-tasks["task_1"] = {
-  stage ("task_1"){    
-    node('label_example1') {  
-        sh 'echo $NODE_NAME'
-    }
-  }
-}
-tasks["task_2"] = {
-  stage ("task_2"){    
-    node('label_example2') {  
-        sh 'echo $NODE_NAME'
-    }
-  }
-}
+
 // jobs.each {
 //   name -> tasks[name] = {
 //     // node {
@@ -47,10 +34,6 @@ tasks["task_2"] = {
 //   }
 // }
 // parallel tasks
-parallel (
-  { tasks[0] },
-  { tasks[1] },
-)
 
 class BaseJobBuilder {
     String name
@@ -90,27 +73,27 @@ class CommonUtils {
   }
 }
 
-// // parallel firstBranch: {
-// //         println new Date() - started
-// //     }, secondBranch: {
+parallel firstBranch: {
+        println new Date() - started
+    }, secondBranch: {
 
-// //         println new Date() - started
-// //     },
-// //     failFast: true
-// // }
+        println new Date() - started
+    },
+    failFast: true
+}
 
-// pipelineJob('job-dsl-plugin') {
-//   definition {
-//     cpsScm {
-//       scm {
-//         git {
-//           remote {
-//             url(giturl)
-//           }
-//           branch('*/master')
-//         }
-//       }
-//       lightweight()
-//     }
-//   }
-// }
+pipelineJob('job-dsl-plugin') {
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url(giturl)
+          }
+          branch('*/master')
+        }
+      }
+      lightweight()
+    }
+  }
+}
