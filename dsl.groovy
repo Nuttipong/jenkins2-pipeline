@@ -118,7 +118,7 @@ class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
 }
 
 def addChoiceParam(String param1, String[] param2, String param3 = '') {
-  { choiceParam(param1, [param2], param3) }
+  choiceParam(param1, [param2], param3)
 }
 
 
