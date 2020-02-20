@@ -85,7 +85,7 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
   void build() {
       this.addLogRotator(100)
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
-      this.addConfig("DESCENDING", "origin/release.*")
+      //this.addConfig("DESCENDING", "origin/release.*")
       // job.addChoiceParam("BUILD_OPTIONS", ["BUILD_FROM_SIT_TAG", 
       //     "BUILD_FROM_UAT_TAG", 
       //     "BUILD_FROM_TAG", 
