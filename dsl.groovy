@@ -7,8 +7,8 @@ def ia_versions = ['4.0.1', '4.0.0']
 class PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
-  PipelineJob(String name, String desc) {
-    this.pipelineJob = pipelineJob(name)
+  PipelineJob(def a) {
+    this.pipelineJob = a
   }
 
   void build() {
@@ -123,7 +123,8 @@ def tasks = [
 //   task -> 
     
 // }
-def j = new PipelineJob(tasks['portal'][0], '')
+def a = pipelineJob(name)
+def j = new PipelineJob(a)
 j.addLogRotator(numbBuildToKeep)
 
 
