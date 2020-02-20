@@ -14,6 +14,7 @@ def jobs = [:];
 
 jobs.each {
   job -> jobs[job.name] = {
+    println job.name
     new BaseJobBuilder(
       name: header + job.name,
       description: 'test'
