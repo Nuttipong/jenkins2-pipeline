@@ -15,8 +15,14 @@ jobs.each {
     //   description: 'test'
     // ).build()
     node {
-      job(name) {
-        CommonUtils.addDefaults(this)
+      pipelineJob(name) {
+          wrappers {
+              colorizeOutput()
+              timestamps()
+          }
+          logRotator {
+              numToKeep(100)
+          }
       }
     }
   }
