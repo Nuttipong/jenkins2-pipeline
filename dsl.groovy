@@ -1,4 +1,4 @@
-import utilities.CommonUtils
+import common.CommonUtils
 
 final header = "hxl_maint_4.0_"
 def giturl = 'https://github.com/Nuttipong/jenkins2-pipeline.git'
