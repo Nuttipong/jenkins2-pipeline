@@ -137,7 +137,7 @@ def job = pipelineJob(jobs['portal'][0]) {
   // job.addDefinition('hexalite/provider_portal', "refs/remotes/${defaultBranch}", false)
 }
 
-println job
+println ">>>>>${job}"
 
 //job.createJob(jobs['portal'][0], jobs['portal'][1])
 // job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
