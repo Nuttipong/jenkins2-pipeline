@@ -111,12 +111,11 @@ tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
       def job = new PipelineJob(pipeline)
-      create(job)
+      job.addLogRotator(numbBuildToKeep)
+      job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
 }
 
 def create(def job) {
-  job.addLogRotator(numbBuildToKeep)
-  job.addChoiceParam('ENVIRONMENT', [space, space + '@AWS'], '')
   // job.addConfig('DESCENDING', 'origin/release.*')
   // job.addChoiceParam('M_APP_VERSION', ia_versions, 'tell Code-Push apply to which mobile package version')
   // job.addChoiceParam('BUILD_OPTIONS', 
