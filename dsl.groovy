@@ -70,7 +70,9 @@ class Job //implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition 
 
   void addChoiceParam(Object[] args) {
     this.pj.with {
-      choiceParam(args[0], args[1], args[2])
+      parameters {
+        choiceParam(args[0], args[1], args[2])
+      }
     }
   }
 
@@ -125,9 +127,6 @@ class Job //implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition 
   }
 }
 
-def addChoiceParam(String param1, String[] param2, String param3 = '') {
-  choiceParam(param1, [param2], param3)
-}
 
 
 // def portal = new Job(pipelineJob: pipelineJob(jobs['portal'][0]))
