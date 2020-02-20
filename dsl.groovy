@@ -11,7 +11,20 @@ def jobs = [
 
 Set ia_versions = ['4.0.1', '4.0.0']
 
-multiJob('build job') {
+multiJob('build job 1') {
+    steps {
+        phase('Second') {
+            phaseJob('JobZ') { println 'JobZ' + new Date() }
+        }
+        phase('Third') {
+            phaseJob('JobB') { println 'JobB' + new Date() }
+            phaseJob('JobA') { println 'JobA' + new Date() }
+            phaseJob('JobC') { println 'JobC' + new Date() }
+        }
+    }
+}
+
+multiJob('build job 2') {
     steps {
         phase('Second') {
             phaseJob('JobZ') { println 'JobZ' + new Date() }
