@@ -119,10 +119,10 @@ def tasks = [
   ia: ['job-dsl-2', 'desc']
 ]
 
-tasks.values().each {
-  task -> 
-    new PipelineJob(tasks['portal'][0], '')
-}
-
+// tasks.values().each {
+//   task -> 
+    
+// }
+new PipelineJob(tasks['portal'][0], '').build()
 
 
