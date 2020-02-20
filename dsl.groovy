@@ -33,7 +33,6 @@ abstract class BaseJobBuilder {
 class JobBuilder extends BaseJobBuilder {
     private String name
     private String description
-    private def job
 
     def build() {
       job(this.name) {
@@ -65,8 +64,7 @@ interface AddDefinition {
 }
 
 class Job implements CreateJob, AddChoiceParam, AddConfig, AddStringParam, AddDefinition {
-
-  private def job = null
+  private def job  
 
   void createJob(String name, String description) {
     job = new JobBuilder(
