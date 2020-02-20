@@ -5,7 +5,7 @@ final defaultBranch = "master" //"$DEFAULT_BRANCH"
 final beJenkinsfile = "jenkins-script/Jenkinsfile_release_single_3.5.groovy"
 def ia_versions = ["4.0.1", "4.0.0"]
 
-class Portal extends PipelineJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
+class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
   Portal(def pipelineJob) {
@@ -98,21 +98,6 @@ class Portal extends PipelineJob implements AddChoiceParam, AddConfig, AddString
   }
 }
 
-class PipelineJob {
-  def pipelineJob
-
-  PipelineJob(def pipelineJob) {
-    this.pipelineJob = pipelineJob
-  }
-
-  Object asType(Class clazz) {
-    if (clazz == Portal) {
-      new Portal(this.pipelineJob)
-    }
-  }
-
-}
-
 interface AddChoiceParam {
   void addChoiceParam(Object[] args)
 }
@@ -142,7 +127,7 @@ tasks.values().each {
   task -> 
       def pipeline = pipelineJob(task[0])
       if (task[0] == Portal) {
-        def job = new Portal(pipeline)
+        def job = new task[0](pipeline)
         job.build()
       }
 }
