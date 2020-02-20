@@ -24,25 +24,10 @@ class BaseJobBuilder {
     String name
     String description
 
-    def build() {
-      def job = pipelineJob(name) {
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url(giturl)
-                }
-                branch('*/master')
-              }
-            }
-            lightweight()
-          }
-        }
+    build() {
+      pipelineJob(name) {
+        CommonUtils.addDefaults(this)
       }
-
-      println '>>>>>>>' job
-
     }
 }
 
@@ -55,6 +40,19 @@ class CommonUtils {
           }
           logRotator {
               numToKeep(100)
+          }
+          definition {
+            cpsScm {
+              scm {
+                git {
+                  remote {
+                    url(giturl)
+                  }
+                  branch('*/master')
+                }
+              }
+              lightweight()
+            }
           }
       }
   }
