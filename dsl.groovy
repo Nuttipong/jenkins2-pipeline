@@ -26,11 +26,7 @@ Set ia_versions = ['4.0.1', '4.0.0']
 // }
 
 
-abstract class BaseJobBuilder {
-  abstract def build()
-}
-
-class JobBuilder extends BaseJobBuilder {
+class JobBuilder {
     private String name
     private String description
 
