@@ -13,7 +13,7 @@ jobs.each {
     new BaseJobBuilder(
       name: header + job,
       description: 'test'
-    ).build(this)
+    ).build()
   }
 }
 parallel tasks
@@ -22,8 +22,8 @@ class BaseJobBuilder {
     String name
     String description
 
-    def build(def factory) {
-        factory.pipelineJob(this.name) {
+    def build() {
+        pipelineJob(this.name) {
             it.description this.description
             CommonUtils.addDefaults(factory)
         }
