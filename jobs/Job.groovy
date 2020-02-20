@@ -1,13 +1,16 @@
 package jobs
 
-import models.Common
+final space = "maint"
+final header = 'hxl_maint_4.0_'
+final numbBuildToKeep = 100
+final defaultBranch = 'master' //'$DEFAULT_BRANCH'
+def ia_versions = ['4.0.1', '4.0.0']
 
-
-class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
+class Job implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
   def pipelineJob
 
-  Portal(def pipelineJob) {
-    this.pipelineJob = pipelineJob
+  Job(String name, String desc) {
+    this.pipelineJob = pipelineJob(name)
   }
 
   void build() {
@@ -91,4 +94,25 @@ class Portal implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition
       }
     }
   }
+}
+
+
+interface AddChoiceParam {
+  void addChoiceParam(Object[] args)
+}
+
+interface AddConfig {
+  void addConfig(String sortMode, String filter)
+}
+
+interface AddStringParam {
+  void addStringParam(Object[] args)
+}
+
+interface AddDefinition {
+  void addDefinition(String repo, String branch, boolean lightweight)
+}
+
+interface AddLogRotator {
+  void addLogRotator(int number)
 }
