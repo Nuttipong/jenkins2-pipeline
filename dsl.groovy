@@ -179,7 +179,7 @@ class WebApi extends BaseJob {
     super(pipelineJob)
   }
 
-  abstract  build() {
+  void build() {
       this.addLogRotator(100)
       this.addChoiceParam("COMPONENT", [this.name], "Component to Build")
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
