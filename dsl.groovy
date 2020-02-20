@@ -10,11 +10,26 @@ def tasks = [:]
 
 jobs.each {
   name -> tasks[name] = {
-    node {
-      new BaseJobBuilder(
-        name: header + job,
-        description: 'test'
-      ).build()
+    // node {
+    //   new BaseJobBuilder(
+    //     name: header + job,
+    //     description: 'test'
+    //   ).build()
+    // }
+    pipelineJob(name) {
+      definition {
+        cpsScm {
+          scm {
+            git {
+              remote {
+                url(giturl)
+              }
+              branch('*/master')
+            }
+          }
+          lightweight()
+        }
+      }
     }
   }
 }
