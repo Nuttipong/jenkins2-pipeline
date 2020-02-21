@@ -1,7 +1,7 @@
 package jobs
 
 import jobs.BaseJob
-import jobs.Job
+import logic.Job
 
 class Portal extends BaseJob implements Job {
 

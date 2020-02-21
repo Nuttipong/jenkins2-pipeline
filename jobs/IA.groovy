@@ -1,5 +1,8 @@
 package jobs
 
+import jobs.BaseJob
+import logic.Job
+
 class IA extends BaseJob implements Job {
 
   IA(def pipelineJob) {

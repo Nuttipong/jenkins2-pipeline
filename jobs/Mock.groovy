@@ -1,7 +1,7 @@
 package jobs
 
 import jobs.BaseJob
-import jobs.Job
+import logic.Job
 
 class Mock extends BaseJob implements Job {
   Mock(def pipelineJob) {
