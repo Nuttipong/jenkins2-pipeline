@@ -14,7 +14,7 @@ class Backend extends BaseJob implements Job {
       this.addLogRotator(100)
       this.addChoiceParam("COMPONENT", [this.name], "Component to Build")
       this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
-      //this.addConfig("DESCENDING", "origin/release.*")
+      this.addConfig("DESCENDING", "origin/release.*")
       this.addChoiceParam("BUILD_OPTIONS", [
         "BUILD_LATEST_FROM_RELEASE40_BRANCH_WITHOUT_MAKING_TAG",
         "BUILD_LATEST_FROM_RELEASE40_BRANCH_AND_MAKE_TAG",
@@ -24,8 +24,8 @@ class Backend extends BaseJob implements Job {
         "MAKE_TAG_ONLY",
         "DELETE_TAG"
         ], "")
-        this.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
-        this.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
-        //this.addDefinition("hexalite/group_solution", "refs/remotes/master", false, "jenkins-script/Jenkinsfile_release_single_3.5.groovy")
+      this.addStringParam("BUILD_SPECIFIER", "", "version number of SIT or UAT or MAINT tag, or branch name")
+      this.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
+      this.addDefinition("hexalite/group_solution", "refs/remotes/\${DEFAULT_BRANCH}", false, "jenkins-script/Jenkinsfile_release_single_3.5.groovy")
   }
 }
