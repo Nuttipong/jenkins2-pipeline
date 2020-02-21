@@ -51,10 +51,6 @@ tasks.values().each {
           job.isMock = task[3]
           moduleList.push(task[0])
         break;
-        case Promregator:
-          job = new Promregator(pipeline)
-          moduleList.push(task[0])
-        break;
       } 
       job.build()
 }
