@@ -6,7 +6,7 @@ import jobs.Job
 class Backend extends BaseJob implements Job {
   def name
 
-  WebApi(def pipelineJob) {
+  Backend(def pipelineJob) {
     super(pipelineJob)
   }
 
