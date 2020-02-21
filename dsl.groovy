@@ -1,11 +1,9 @@
 
 import jobs.Portal
 import jobs.IA
+import logic.*
 
 final header = "hxl_maint_4.0_"
-
-def pt = new Portal();
-println ">>>> ${pt}" 
 
 def tasks = [
   portal: ["provider_portal", "", Web],
@@ -60,10 +58,6 @@ interface AddStringParam {
 
 interface AddDefinition {
   void addDefinition(String repo, String branch, boolean lightweight, String jenkinsFile)
-}
-
-interface AddLogRotator {
-  void addLogRotator(int number)
 }
 
 abstract class BaseJob implements AddChoiceParam, AddConfig, AddStringParam, AddDefinition, AddLogRotator {
