@@ -1,6 +1,6 @@
 
 import jobs.Portal
-import jobs.IA as Ia
+import jobs.IA
 import jobs.Backend
 import logic.Job
 
@@ -12,9 +12,9 @@ import logic.Job
 
 def tasks = [
   portal: ["provider-portal", "", Portal, false],
-  ia: ["integrated-app", "", Ia, false],
+  ia: ["integrated-app", "", IA, false],
   portalMock: ["provider-portal-mock", "", Portal, true],
-  iaMock: ["integrated-app-mock", "", Ia, true],
+  iaMock: ["integrated-app-mock", "", IA, true],
   apiGatewayMock: ["gbmf-apigateway-mock", "", Backend, false],
   gbmfConfigServer: ["gbmf-config-server", "", Backend, false],
   gbmfServiceDiscovery: ["gbmf-service-discovery", "", Backend, false],
@@ -41,8 +41,8 @@ tasks.values().each {
           job = new Portal(pipeline)
           job.isMock = task[3]
         break;
-        case Ia:
-          job = new Ia(pipeline)
+        case IA:
+          job = new IA(pipeline)
           job.isMock = task[3]
         break;
         case Backend:
