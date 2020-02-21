@@ -1,6 +1,5 @@
 
-import jobs.Portal
-import jobs.IA
+import jobs
 
 final header = "hxl_maint_4.0_"
 
