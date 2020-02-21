@@ -1,7 +1,7 @@
 
 import jobs.Portal
 import jobs.IA
-import logic.AddLogRotator as AddLogRotator
+import logic.AddLogRotator
 
 final header = "hxl_maint_4.0_"
 
