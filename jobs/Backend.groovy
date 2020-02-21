@@ -5,7 +5,8 @@ import logic.Job
 
 class Backend extends BaseJob implements Job {
   def name
-
+  def isMock
+  
   Backend(def pipelineJob) {
     super(pipelineJob)
   }
