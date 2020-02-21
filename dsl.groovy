@@ -1,5 +1,11 @@
 
+import jobs.Portal
+import jobs.IA
+
 final header = "hxl_maint_4.0_"
+
+def pt = new Portal();
+println ">>>> ${pt}" 
 
 def tasks = [
   portal: ["provider_portal", "", Web],
