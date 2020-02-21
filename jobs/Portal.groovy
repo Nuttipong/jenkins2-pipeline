@@ -23,10 +23,10 @@ class Portal extends BaseJob implements Job {
 
     this.addLogRotator(100)
     this.addChoiceParam("ENVIRONMENT", ["maint", "maint" + "@AWS"], "")
-    this.addConfig(sorted, branch)
-    this.addChoiceParam("BUILD_OPTIONS", buildOptions, "")
-    this.addStringParam("BUILD_SPECIFIER", buildSpecifier, "version number of SIT or UAT or MAINT tag, or branch name")
-    this.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
-    this.addDefinition("hexalite/provider_portal", "refs/remotes/\${DEFAULT_BRANCH}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
+    // this.addConfig(sorted, branch)
+    // this.addChoiceParam("BUILD_OPTIONS", buildOptions, "")
+    // this.addStringParam("BUILD_SPECIFIER", buildSpecifier, "version number of SIT or UAT or MAINT tag, or branch name")
+    // this.addStringParam("COMMIT_ID", "", "BUILD_FROM_COMMIT_ID or MAKE_TAG_ONLY (MAKE_TAG_ONLY -> will make a tag with this commit id)")
+    // this.addDefinition("hexalite/provider_portal", "refs/remotes/\${DEFAULT_BRANCH}", false, "jenkins-script/Jenkinsfile_release_3.5.groovy")
   }
 }
